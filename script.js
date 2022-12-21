@@ -1,44 +1,46 @@
-let clear = document.querySelector("button");
+const grid = document.querySelector(".gridContainer");
+const userInput = document.getElementById("quantity");
+const resetButton = document.querySelector(".reset");
 
-//function to create a 16x16 grid
-function createGrid(size){
-    function resetSize(){
-        clear.addEventListener('click', ()=>{
-            let number = prompt("What size would you like the grid to be? (1-100)");
-            container.style.gridTemplateRows = `repeat(${number}, 1fr)`;
-            container.style.gridTemplateColumns = `repeat(${number}, 1fr)`;
-        })
-        
-        
-    }
-    resetSize();
+createGrid = () => {
+  for (let i = 0; i < 256; i++) {
+    const div = document.createElement("div");
+    div.classList.add("square");
+    grid.appendChild(div);
+  }
+};
 
-    let container = document.querySelector(".container");
-    container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-    container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-    
-    for (let i = 0; i < size*size; i++) {
-        
-        let square = document.createElement("div");
-        square.style.backgroundColor = "black";
-        container.appendChild(square);
+updateGrid = () => {
+  grid.innerHTML = "";
+  grid.style.setProperty(
+    "grid-template-columns",
+    `repeat(${userInput.value}, 2fr)`
+  );
+  grid.style.setProperty(
+    "grid-template-rows",
+    `repeat(${userInput.value}, 2fr)`
+  );
+  for (let i = 0; i < userInput.value * userInput.value; i++) {
+    const div = document.createElement("div");
+    div.classList.add("square");
+    grid.appendChild(div);
+  }
+  console.log(userInput.value);
+};
 
-        //change background color of a square on hover
-        square.addEventListener('mouseover', e=>{
-            square.style.backgroundColor = "white";
-        })
+const square = document.querySelector("div");
+square.addEventListener("mouseover", function(event) {
+  event.target.classList.replace("square", "color");
+});
 
+userInput.addEventListener("change", updateGrid);
 
-        //function to reset the grid
-        function clearGrid(){
-            clear.addEventListener('click', e=>{
-                square.style.backgroundColor = "black"
-           })
-        }
-        
+resetButton.addEventListener("click", function() {
+  grid.innerHTML = "";
+  userInput.value = "";
+  grid.style.setProperty("grid-template-columns", `repeat(16, 2fr)`);
+  grid.style.setProperty("grid-template-rows", `repeat(16, 2fr)`);
+  createGrid();
+});
 
-        clearGrid();    
-    }
-}
-
-createGrid(16);
+createGrid();
