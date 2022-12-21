@@ -5,3 +5,26 @@
 .cell {
     border: 1px solid black;
 }
+
+
+#container {
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-cols), 1fr);
+  }
+  
+  .grid-item {
+    height: 30px;
+    width: 30px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }  
+  
+  .black {
+    background-color: black;
+  }
+  
+  h1 {
+    color: white;
+  }
+  
